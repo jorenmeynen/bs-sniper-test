@@ -1,0 +1,151 @@
+/* Importing Bootstrap SCSS file. */
+// @import '~bootstrap/scss/bootstrap';
+@import "~bootstrap-dark-5/dist/css/bootstrap-nightshade.min.css";
+
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+@import "~datatables.net-bs5/css/dataTables.bootstrap5.min.css";
+
+:root {
+  --expert-plus: #8f48db;
+  --expert: #bf2a42;
+  --hard: tomato;
+  --normal: #59b0f4;
+  --easy: MediumSeaGreen;
+  --highest-score: #49b54e81;
+  --highest-score-sniper-target: #32ef3b14;
+  --bad-swing: #7c2626;
+  --pp-color: #8992e8;
+}
+
+body {
+  font-size: .875rem;
+}
+
+.sub-text {
+  font-size: 0.75rem;
+  line-height: 1.2em;
+  font-weight: 400;
+}
+
+.text-pp {
+  color: var(--pp-color);
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items {
+  & .ng-optgroup {
+    padding: 0px 10px;
+  }
+  // & .ng-option {
+  //   padding: 4px 10px;
+  // }
+}
+
+.progress {
+  background-color: #454545;
+}
+
+.table-compare-scores .score {
+  border-radius: 3px;
+  // padding: 5px;
+  font-weight: 700;
+  &.highest-score {
+    background-color: var(--highest-score);
+  }
+  &.highest-score-sniper-target {
+    background-color: var(--highest-score-sniper-target);
+  }
+}
+
+.bad-swing {
+  color: var(--bad-swing);
+}
+
+.image-size-30 {
+  height: 30px;
+  width: 30px;
+}
+.image-size-50 {
+  height: 50px;
+  width: 50px;
+  border-radius: 5px;
+}
+.image-size-80 {
+  height: 80px;
+  width: 80px;
+}
+
+.btn:focus {
+  box-shadow: none;
+}
+
+.border-dashed-left {
+  border-left: 1px dashed #454545;
+}
+
+
+// Player cards
+.player-card {
+  width: 220px;
+}
+#player-actions {
+  background-color: rgba(0,0,0,.31);
+}
+.action {
+  color: white;
+  padding: .25em;
+  margin: 0 .25em;
+
+  &:hover {
+    background-color: rgba(0,0,0,.31);
+  }
+}
+
+.table-img {
+  max-width: 54px;
+  min-width: 54px;
+  height: 50px;
+}
+
+.tag:not(body) {
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  height: 2em;
+
+  font-size: x-small;
+  min-width: 20px;
+  color: #fff;
+  padding: 4px 4px 3px;
+  // cursor: help;
+}
+
+.tag {
+  display: flex;
+  position: absolute;
+  bottom: 4px;
+  right: 0px;
+}
+
+.tag.easy {
+  background-color: var(--easy);
+}
+.tag.normal {
+  background-color: var(--normal);
+}
+.tag.hard {
+  background-color: var(--hard);
+}
+.tag.expert {
+  background-color: var(--expert);
+}
+.tag.expert-plus {
+  background-color: var(--expert-plus);
+}
+
+.country .emoji {
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  vertical-align: sub;
+}

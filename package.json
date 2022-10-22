@@ -1,0 +1,28 @@
+{
+  "name": "bs-sniper-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run prepare && concurrently \"npm run start:frontend\" \"npm run start:backend\"",
+    "start:frontend": "cd frontend && npm start",
+    "start:backend": "cd backend && npm start",
+    "prepare": "concurrently \"npm run prepare:frontend\" \"npm run prepare:backend\"",
+    "prepare:frontend": "cd frontend && npm install",
+    "prepare:backend": "cd backend && npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jorenmeynen/bs-sniper-test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jorenmeynen/bs-sniper-test/issues"
+  },
+  "homepage": "https://github.com/jorenmeynen/bs-sniper-test#readme",
+  "devDependencies": {
+    "concurrently": "^7.5.0"
+  }
+}

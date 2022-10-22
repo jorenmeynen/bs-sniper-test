@@ -1,0 +1,14 @@
+.center {
+  line-height: 1.5;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.player-card.add-player-card {
+  height: 132px;
+  border-style: dashed !important;
+  cursor: pointer;
+  &:hover {
+    background-color: #0005;
+  }
+}

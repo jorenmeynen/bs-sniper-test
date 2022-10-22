@@ -1,0 +1,86 @@
+<div class="d-flex flex-wrap align-items-end">
+
+  <div class="p-1" *ngFor="let player of players">
+
+    <h6 class="ps-3" *ngIf="players.indexOf(player) === 0">Sniper</h6>
+    <h6 class="ps-3" *ngIf="players.indexOf(player) === 1">Target</h6>
+
+    <div class="player-card border border-secondary rounded">
+
+      <a id="player-info" class="d-flex text-reset text-decoration-none" href="https://scoresaber.com/u/{{player.id}}" target="_blank">
+        <div>
+          <img src="{{ player.profilePicture }}" alt="" class="image-size-80" id="profilePicture-{{player.id}}" crossorigin="anonymous">
+        </div>
+
+        <div class="align-self-center ps-2">
+          <div style="line-height: 1.2em">{{player.name}}</div>
+          <div class="sub-text">
+            <span class="text-nowrap">
+              <fa-icon [icon]="faIcons.globe"></fa-icon>
+              <span class="ps-1 pe-2">#{{player.rank}}</span>
+            </span>
+            <span class="text-nowrap">
+              <span class="country" [innerHTML]="parseEmoji(player.country)"></span>
+              <span class="ps-1">#{{player.countryRank}}</span>
+            </span>
+          </div>
+          <div class="sub-text text-pp">
+            <span class="text-nowrap fw-bolder">{{ player.pp }}pp</span>
+          </div>
+        </div>
+      </a>
+
+      <div>
+        <ngb-progressbar class="rounded-0"
+          type="success"
+          [striped]="loadingPlayerScores[player.id]"
+          [animated]="true"
+          [value]="scoresCurrentPlayers[player.id]?.length"
+          [max]="player.scoreStats.totalPlayCount">
+          {{scoresCurrentPlayers[player.id]?.length}}/{{player.scoreStats.totalPlayCount}}
+        </ngb-progressbar>
+      </div>
+
+      <div>
+        <div id="player-actions" class="d-flex">
+
+          <button class="btn action" [disabled]="players.indexOf(player) === 0" (click)="movePlayerLeft(player)" placement="bottom" [ngbTooltip]="'Move player left'">
+            <fa-icon [icon]="faIcons.caretLeft" size="lg"></fa-icon>
+          </button>
+          <button class="btn action" [disabled]="players.indexOf(player) === players.length-1" (click)="movePlayerRight(player)" placement="bottom" [ngbTooltip]="'Move player right'">
+            <fa-icon [icon]="faIcons.caretRight" size="lg"></fa-icon>
+          </button>
+          <button class="btn action" *ngIf="players.indexOf(player) > 1" (click)="movePlayerToTarget(player)" placement="bottom" [ngbTooltip]="'Set player as target'">
+            <fa-icon [icon]="faIcons.crosshairs"></fa-icon>
+          </button>
+
+          <div class="flex-grow-1"></div>
+
+          <button class="btn action" (click)="reloadPlayerScores(player)" placement="bottom" [ngbTooltip]="'Reload player scores'">
+            <fa-icon [icon]="faIcons.rotate" [spin]="loadingPlayerScores[player.id]"></fa-icon>
+          </button>
+
+          <!-- <button class="btn action" (click)="player.shown = !player.shown">
+            <fa-icon [icon]="faIcons.toggleOn" *ngIf="player.shown"></fa-icon>
+            <fa-icon [icon]="faIcons.toggleOff" *ngIf="!player.shown"></fa-icon>
+          </button> -->
+
+          <button class="btn action" (click)="removePlayerScores(player)" placement="bottom" [ngbTooltip]="'Remove player scores'">
+            <fa-icon [icon]="faIcons.userMinus"></fa-icon>
+          </button>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="p-1">
+    <app-add-profiles (playerAdded)="addedPlayer($event)" [players]="players"></app-add-profiles>
+  </div>
+
+</div>
+
+
+

@@ -1,0 +1,100 @@
+<div class="card card-body m-2">
+  <app-player-cards [players]="players" (playerMoved)="reorderTableColumn()" (snipeAction)="makeSnipePlaylist($event)"></app-player-cards>
+</div>
+
+<div class="card card-body m-2">
+
+  <div class="d-flex flex-wrap align-items-center px-2 py-1">
+
+
+    <div class="d-flex flex-wrap">
+
+      <div class="me-1 py-1">
+        <button class="btn btn-primary" [disabled]="players.length < 2" (click)="makeSnipePlaylist(players[1])" placement="top" [ngbTooltip]="tooltipSnipe">
+          <fa-icon [icon]="faIcons.download" [fixedWidth]="true"></fa-icon>
+          <span class="ps-2">Snipe Playlist</span>
+        </button>
+      </div>
+
+      <div class="input-group me-3  py-1" style="max-width: 200px;">
+        <label class="input-group-text" for="snipeCount"># Songs:</label>
+        <input type="number" class="form-control" id="snipeCount" placeholder="{{snipeCountDefault}}" [(ngModel)]="snipeCount" min="1">
+      </div>
+
+    </div>
+
+
+
+    <div class="btn-group me-3 py-1">
+      <button class="btn btn-outline-light me-1" (click)="showScoresInCommon = !showScoresInCommon; filterTable()">
+        <fa-icon [icon]="faIcons.check" class="text-success" [fixedWidth]="true" *ngIf="showScoresInCommon"></fa-icon>
+        <fa-icon [icon]="faIcons.xmark" class="text-danger" [fixedWidth]="true" *ngIf="!showScoresInCommon"></fa-icon>
+        <span class="ps-1">Played</span>
+      </button>
+      <button class="btn btn-outline-light me-1" (click)="showRanked = !showRanked; filterTable()">
+        <fa-icon [icon]="faIcons.check" class="text-success" [fixedWidth]="true" *ngIf="showRanked"></fa-icon>
+        <fa-icon [icon]="faIcons.xmark" class="text-danger" [fixedWidth]="true" *ngIf="!showRanked"></fa-icon>
+        <span class="ps-1">Ranked</span>
+      </button>
+    </div>
+
+    <div class="me-3">
+      <div class="custom-slider" style="width: 300px;">
+        <ngx-slider [(value)]="minStars" [(highValue)]="maxStars" [options]="sliderOptions" (userChangeEnd)="filterTable()"></ngx-slider>
+      </div>
+    </div>
+
+    <div class="me-3 py-1">
+      <button class="btn btn-outline-light" (click)="showSnipedSongsAlso = !showSnipedSongsAlso; filterTable()">
+        <fa-icon [icon]="faIcons.eyeR" class="text-success" [fixedWidth]="true" *ngIf="showSnipedSongsAlso"></fa-icon>
+        <fa-icon [icon]="faIcons.eyeSlashR" class="text-danger" [fixedWidth]="true" *ngIf="!showSnipedSongsAlso"></fa-icon>
+        <!-- <fa-icon [icon]="faIcons.eye" class="text-success" *ngIf="showSnipedSongsAlso"></fa-icon>
+        <fa-icon [icon]="faIcons.eyeSlash" class="text-danger" *ngIf="!showSnipedSongsAlso"></fa-icon> -->
+        <span class="ps-1">Sniped</span>
+      </button>
+    </div>
+
+  </div>
+
+  <div class="d-flex flex-wrap align-items-center px-2 py-1">
+
+    <div class="btn-group me-3 py-1">
+      <button class="btn btn-outline-light me-1" (click)="showDates = !showDates; recreateDataTable()">
+        <fa-icon [icon]="faIcons.eyeR" class="text-success" [fixedWidth]="true" *ngIf="showDates"></fa-icon>
+        <fa-icon [icon]="faIcons.eyeSlashR" class="text-danger" [fixedWidth]="true" *ngIf="!showDates"></fa-icon>
+        <!-- <fa-icon [icon]="faIcons.eye" class="text-success" *ngIf="showSnipedSongsAlso"></fa-icon>
+        <fa-icon [icon]="faIcons.eyeSlash" class="text-danger" *ngIf="!showSnipedSongsAlso"></fa-icon> -->
+        <span class="ps-1">Dates</span>
+      </button>
+      <button class="btn btn-outline-light me-1" (click)="showPP = !showPP; recreateDataTable()">
+        <fa-icon [icon]="faIcons.eyeR" class="text-success" [fixedWidth]="true" *ngIf="showPP"></fa-icon>
+        <fa-icon [icon]="faIcons.eyeSlashR" class="text-danger" [fixedWidth]="true" *ngIf="!showPP"></fa-icon>
+        <!-- <fa-icon [icon]="faIcons.eye" class="text-success" *ngIf="showSnipedSongsAlso"></fa-icon>
+        <fa-icon [icon]="faIcons.eyeSlash" class="text-danger" *ngIf="!showSnipedSongsAlso"></fa-icon> -->
+        <span class="ps-1">PP</span>
+      </button>
+      <button class="btn btn-outline-light me-1" (click)="showDifference = !showDifference; recreateDataTable()">
+        <fa-icon [icon]="faIcons.eyeR" class="text-success" [fixedWidth]="true" *ngIf="showDifference"></fa-icon>
+        <fa-icon [icon]="faIcons.eyeSlashR" class="text-danger" [fixedWidth]="true" *ngIf="!showDifference"></fa-icon>
+        <!-- <fa-icon [icon]="faIcons.eye" class="text-success" *ngIf="showSnipedSongsAlso"></fa-icon>
+        <fa-icon [icon]="faIcons.eyeSlash" class="text-danger" *ngIf="!showSnipedSongsAlso"></fa-icon> -->
+        <span class="ps-1">Difference</span>
+      </button>
+    </div>
+
+
+  </div>
+
+
+  <div class="p-3">
+    <table id="{{table_id}}" datatable [dtOptions]="dtOptions" class="table table-hover table-compare-scores w-100">
+    </table>
+  </div>
+
+</div>
+
+
+<ng-template #tooltipSnipe>
+  <div>{{players[0].name}} <fa-icon [icon]="faIcons.crosshairs"></fa-icon> {{players[1].name}}</div>
+</ng-template>
+

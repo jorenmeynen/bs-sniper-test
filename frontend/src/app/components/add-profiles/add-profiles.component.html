@@ -1,0 +1,143 @@
+
+<!-- <button class="btn btn-primary" (click)="openModal(addPlayersModal)">Add player</button> -->
+
+<div class="player-card border border-secondary rounded add-player-card"  (click)="openModal(addPlayersModal)">
+  <div class="d-flex flex-column justify-content-center h-100 text-center">
+    <!-- <div style="font-size: 60px;font-weight:700;">
+      +
+    </div> -->
+    <div>
+      <fa-icon [icon]="faIcons.plus" size="3x"></fa-icon>
+    </div>
+    <div>
+      <span *ngIf="players.length === 0">Add sniper</span>
+      <span *ngIf="players.length === 1">Add target</span>
+      <span *ngIf="players.length > 1">Add player</span>
+    </div>
+  </div>
+</div>
+
+<ng-template #addPlayersModal let-modal>
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Add player</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+</div>
+<div class="modal-body">
+
+  <div class="form-group mb-2">
+
+    <label for="contactMethod">Player name</label>
+    <ng-select class=""
+              [(ngModel)]="selectedPlayerId"
+              [items]="searchedPlayers"
+              [groupBy]="groupByCountry"
+              bindLabel="name"
+              bindValue="id"
+              [searchable]="true"
+              [loading]="searchLoading"
+              [disabled]="!!selectedPlayerById"
+              (search)="search($event)"
+              (change)="setSelectedPlayer()"
+              placeholder="Select a player">
+
+      <!-- Selected item -->
+      <ng-template ng-label-tmp let-item="item">
+        <div class="d-inline-block align-middle">
+          <img src="{{item.profilePicture}}" alt="" style="height: 22px; width: 22px;">
+        </div>
+
+        <div class="d-inline-block align-middle ps-2">
+          <span>{{item.name}} #{{item.rank}}</span>
+        </div>
+      </ng-template>
+
+      <!-- Selected options -->
+      <ng-template ng-option-tmp let-item="item">
+        <div class="d-inline-block align-middle">
+          <img src="{{item.profilePicture}}" alt="" style="height: 30px; width: 30px;">
+        </div>
+
+        <div class="d-inline-block align-middle ps-2">
+          <div style="line-height: 1.2em">{{item.name}}</div>
+          <div class="sub-text">#{{item.rank}}</div>
+        </div>
+      </ng-template>
+
+      <ng-template ng-notfound-tmp let-searchTerm="searchTerm">
+        <div class="ng-option disabled">
+          No players found for "{{searchTerm}}"
+        </div>
+      </ng-template>
+
+      <ng-template ng-loadingtext-tmp let-searchTerm="searchTerm">
+        <div class="ng-option disabled">
+          Searching for players with "{{searchTerm}}"
+        </div>
+      </ng-template>
+
+    </ng-select>
+
+  </div>
+
+  <div class="form-group">
+
+    <label for="contactMethod">Scoresaber ID</label>
+    <ng-select class=""
+              [(ngModel)]="selectedPlayerById"
+              [items]="searchedPlayerIds"
+              [groupBy]="groupByCountry"
+              bindLabel="id"
+              bindValue="id"
+              [searchable]="true"
+              [loading]="searchIdLoading"
+              [disabled]="!!selectedPlayerId"
+              (search)="searchID($event)"
+              (change)="setSelectedPlayerById()"
+              placeholder="Select a player">
+
+      <!-- Selected item -->
+      <ng-template ng-label-tmp let-item="item">
+        <div class="d-inline-block align-middle">
+          <img src="{{item.profilePicture}}" alt="" style="height: 22px; width: 22px;">
+        </div>
+
+        <div class="d-inline-block align-middle ps-2">
+          <span>{{item.name}} #{{item.rank}}</span>
+        </div>
+      </ng-template>
+
+      <!-- Selected options -->
+      <ng-template ng-option-tmp let-item="item">
+        <div class="d-inline-block align-middle">
+          <img src="{{item.profilePicture}}" alt="" style="height: 30px; width: 30px;">
+        </div>
+
+        <div class="d-inline-block align-middle ps-2">
+          <div style="line-height: 1.2em">{{item.name}}</div>
+          <div class="sub-text">#{{item.rank}}</div>
+        </div>
+      </ng-template>
+
+      <ng-template ng-notfound-tmp let-searchTerm="searchTerm">
+        <div class="ng-option disabled">
+          No players found for "{{searchTerm}}"
+        </div>
+      </ng-template>
+
+      <ng-template ng-loadingtext-tmp let-searchTerm="searchTerm">
+        <div class="ng-option disabled">
+          Searching for players with "{{searchTerm}}"
+        </div>
+      </ng-template>
+
+    </ng-select>
+
+  </div>
+
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-primary" (click)="addPlayer()">Add Player</button>
+</div>
+
+</ng-template>

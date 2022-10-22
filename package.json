@@ -7,6 +7,9 @@
     "start": "npm run prepare && concurrently \"npm run start:frontend\" \"npm run start:backend\"",
     "start:frontend": "cd frontend && npm start",
     "start:backend": "cd backend && npm start",
+    "host": "npm run prepare && concurrently \"npm run host:frontend\" \"npm run host:backend\"",
+    "host:frontend": "cd frontend && npm run start-express",
+    "host:backend": "cd backend && npm start",
     "prepare": "concurrently \"npm run prepare:frontend\" \"npm run prepare:backend\"",
     "prepare:frontend": "cd frontend && npm install",
     "prepare:backend": "cd backend && npm install"

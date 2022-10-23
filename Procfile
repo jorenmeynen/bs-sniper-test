@@ -1,1 +1,1 @@
-host: npm run host
+web: npm run start-express

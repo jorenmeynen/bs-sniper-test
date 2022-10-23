@@ -1,9 +1,47 @@
 //Install express server
-const express = require("express");
-const path = require("path");
+import express from "express";
+import path from "path";
+import cors from "cors";
+
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 const app_name = "ss-details";
+
+
+
+
+
+// const app = express();
+app.use(express.urlencoded({ extended: false }));
+app.use(cors({ origin: "*" }));
+// app.use(cors({ origin: "*" }));
+// app.use(cors({
+//   origins: [
+//     "https://ss-details.herokuapp.com",
+//     "http://localhost:4200",
+//   ]
+// }));
+app.get("/favicon.ico", (req, res) => "your favicon");
+// const routes = require("./backend/index.js");
+import routes from "./backend/index.js";
+app.use("/api", routes);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Serve only the static files form the dist directory
 app.use(express.static(`${__dirname}/dist/${app_name}`));
@@ -13,4 +51,7 @@ app.get("/*", function (req, res) {
 });
 
 // Start the app by listening on the default Heroku port
-app.listen(process.env.PORT || 8080);
+const port = process.env.PORT || 8080;
+app.listen(port, () => console.log(`Example app listening on port ${port}`));
+
+

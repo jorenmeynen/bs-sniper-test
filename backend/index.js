@@ -1,5 +1,4 @@
-import express, { urlencoded } from "express";
-import cors from "cors";
+import express from "express";
 
 import { getPlayerProfile, getAllScoresById, getScoresByIdAndPage, getScoresByIdAndSongCount } from "./getPlayerScores.js";
 import { getCSVData } from "./getRelevantData.js";
@@ -7,45 +6,32 @@ import { input_id, input_id_again, input_buttons } from "./form_content.js";
 import { searchPlayers } from "./searchPlayers.js";
 
 
-const app = express();
-const port = process.env.PORT || 5000;
-app.use(urlencoded({ extended: false }));
+const Router = express.Router();
 
-app.use(cors());
-// app.use(cors({ origin: "*" }));
-// app.use(cors({
-//   origins: [
-//     "https://ss-details.herokuapp.com",
-//     "http://localhost:4200",
-//   ]
-// }));
-
-app.get("/favicon.ico", (req, res) => "your favicon");
-
-app
+Router
   .route("/")
   .get((req, res) => res.send(input_id()))
   .post((req, res) => res.redirect(`/${req.body.ss_id}/form`));
 
-app.route("/players").get((req, res) => {
+Router.route("/players").get((req, res) => {
   const search = req.query["search"];
   respondPlayerSearch(res, search);
 });
 
-app.route("/profile").get((req, res) => {
+Router.route("/profile").get((req, res) => {
   const ss_id = req.query["ss_id"];
   respondProfileJSON(res, ss_id);
 });
 
-app.route("/scores/full").get((req, res) => {
+Router.route("/scores/full").get((req, res) => {
   const ss_id = req.query["ss_id"];
   respondAllScoresJSON(res, ss_id);
 });
 
-app.route("/track/recent").get( async (req, res) => {
+Router.route("/track/recent").get( async (req, res) => {
   makePlaylist(req, res, 'recent');
 })
-app.route("/track/top").get( async (req, res) => {
+Router.route("/track/top").get( async (req, res) => {
   makePlaylist(req, res, 'top');
 })
 
@@ -106,7 +92,7 @@ async function makePlaylist(req, res, sort='recent') {
     const playlist = buildPlaylist(syncUrl, response_scores_data.data);
 
     playlist.playlistTitle = `Track ${sort} ${player_name}${new_page > 1 ? `, page ${new_page}` : ""}`;
-    playlist.playlistAuthor = "ss-details.heruokuapp.com";
+    playlist.playlistAuthor = "ss-details.heruokuRouter.com";
     playlist.playlistDescription = `${ss_id} - ${player_name} - ${song_count} Most Recent Songs`;
 
     res.json(playlist);
@@ -159,13 +145,13 @@ function buildPlaylist(syncUrl, score_data) {
 
 
 
-app.get("/scores", (req, res) => {
+Router.get("/scores", (req, res) => {
   const ss_id = req.query["ss_id"];
   const page = req.query["page_number"];
   respondScoresJSON(res, ss_id, page);
 });
 
-app.get("/playlist", (req, res) => {
+Router.get("/playlist", (req, res) => {
   const ss_id = req.query["ss_id"];
   const name = req.query["name"];
   const songCount = req.query["songCount"];
@@ -176,26 +162,23 @@ app.get("/playlist", (req, res) => {
 });
 
 // --- < To be removed > ---
-app.route("/:ss_id").get((req, res) => {
+Router.route("/:ss_id").get((req, res) => {
   const ss_id = req.params.ss_id;
   respondAllScoresJSON(res, ss_id);
 });
-app.route("/:ss_id/form").get((req, res) => {
+Router.route("/:ss_id/form").get((req, res) => {
   const ss_id = req.params.ss_id;
   getFormContent(res, ss_id);
 });
-app.route("/:ss_id/form/json").get((req, res) => {
+Router.route("/:ss_id/form/json").get((req, res) => {
   const ss_id = req.params.ss_id;
   respondAllScoresJSON(res, ss_id);
 });
-app.route("/:ss_id/form/csv").get((req, res) => {
+Router.route("/:ss_id/form/csv").get((req, res) => {
   const ss_id = req.params.ss_id;
   downloadCSV(res, ss_id);
 });
 // --- </ To be removed > ---
-
-
-app.listen(port, () => console.log(`Example app listening on port ${port}`));
 
 async function respondProfileJSON(res, ss_id) {
   try {
@@ -292,3 +275,6 @@ function handleError(error, res) {
     res.status(error.status).send(error.data);
   }
 }
+
+
+export default Router;

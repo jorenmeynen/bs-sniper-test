@@ -37,14 +37,18 @@
     "country-code-lookup": "^0.0.20",
     "datatables.net": "^1.11.3",
     "datatables.net-bs5": "^1.11.3",
-    "express": "^4.17.3",
     "jquery": "^3.6.0",
     "lz-string": "^1.4.4",
-    "path": "^0.12.7",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "twemoji": "^14.0.2",
-    "zone.js": "~0.11.4"
+    "zone.js": "~0.11.4",
+
+    
+    "axios": "^0.26.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^13.2.4",

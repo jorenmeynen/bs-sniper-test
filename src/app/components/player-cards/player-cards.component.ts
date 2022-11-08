@@ -183,7 +183,9 @@ export class PlayerCardsComponent implements OnInit, OnDestroy {
 
   downloadTrackingPlaylist(player: Player, type: 'recent' | 'top') {
     this.playlistService.downloadTrackingPlaylist(player, type).subscribe(
-      (playlist) => {
+      (playlist: Playlist) => {
+        let image_base64 = this.getBase64Image(document.getElementById(`profilePicture-${player.id}`));
+        playlist.image = image_base64;
         const blob = new Blob([JSON.stringify(playlist)], { type: 'text/plain' });
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -192,6 +194,16 @@ export class PlayerCardsComponent implements OnInit, OnDestroy {
         link.click();
       }
     );
+  }
+
+  getBase64Image(img: any) {
+    var canvas = document.createElement("canvas");
+    canvas.width = img.width * 2;
+    canvas.height = img.height * 2;
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    var dataURL = canvas.toDataURL("image/png");
+    return dataURL
   }
 
 

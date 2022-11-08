@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Player } from '../classes/player';
 import { PlayerScore } from '../classes/playerScore';
 import { Playlist } from '../classes/playlist';
@@ -58,7 +59,7 @@ export class PlaylistService {
     return this.apiService.get("playlist/", { 'ss_id': sniper.id, 'name': sniper.name, 'songCount': songCount, 'playlistTitle': playlist.playlistTitle, 'playlistSongs': playlist.songs.map(e => e.levelid) });
   }
 
-  downloadTrackingPlaylist(player: Player, type: 'recent' | 'top') {
+  downloadTrackingPlaylist(player: Player, type: 'recent' | 'top'): Observable<Playlist> {
     const params = {
       'ss_id': player.id,
       'song_count': 20,

@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable()
@@ -19,7 +20,7 @@ export class ApiService {
     return { headers: new HttpHeaders(headers), };
   }
 
-  get(url: string, query: any = {}, authRequire = true) {
+  get(url: string, query: any = {}, authRequire = true): Observable<any> {
     const httpOptions: any = this.getHttpOptions(undefined, authRequire);
 
     if (query) {

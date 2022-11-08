@@ -1,0 +1,15 @@
+<div class="dc-dark-chat p-3" style="height:100%">
+  <table>
+    <tr>
+      <th>Rank</th>
+      <th>Color</th>
+      <th>Color name</th>
+    </tr>
+    <tr *ngFor="let colorRank of getObjectKeys(colors['suggested'])">
+      <td class="pe-2">{{colorRank}}</td>
+      <td class="pe-3" [style]="{color: colors['suggested'][colorRank]}">playerName</td>
+      <td> {{colors['suggested'][colorRank]}}</td>
+    </tr>
+  </table>
+</div>
+

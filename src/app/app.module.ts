@@ -20,6 +20,7 @@ import { PlayerCardsComponent } from './components/player-cards/player-cards.com
 import { DataTablesModule } from 'angular-datatables';
 import { DecimalPipe } from '@angular/common';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { BbscRankingColorsComponent } from './containers/bbsc-ranking-colors/bbsc-ranking-colors.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
     AddProfilesComponent,
     CompareScoresComponent,
     PlayerCardsComponent,
+    BbscRankingColorsComponent,
   ],
   imports: [
     BrowserModule,

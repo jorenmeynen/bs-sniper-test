@@ -58,4 +58,13 @@ export class PlaylistService {
     return this.apiService.get("playlist/", { 'ss_id': sniper.id, 'name': sniper.name, 'songCount': songCount, 'playlistTitle': playlist.playlistTitle, 'playlistSongs': playlist.songs.map(e => e.levelid) });
   }
 
+  downloadTrackingPlaylist(player: Player, type: 'recent' | 'top') {
+    const params = {
+      'ss_id': player.id,
+      'song_count': 20,
+      'page_number': 1,
+      'last_request': 0
+    }
+    return this.apiService.get(`track/${type}`, params);
+  }
 }

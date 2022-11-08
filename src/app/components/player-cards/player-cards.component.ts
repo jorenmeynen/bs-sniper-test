@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { faCaretLeft, faCaretRight, faCrosshairs, faGlobe, faRotate, faToggleOff, faToggleOn, faUserMinus } from '@fortawesome/free-solid-svg-icons';
+import { faCaretLeft, faCaretRight, faCrosshairs, faDownload, faGlobe, faRotate, faSatelliteDish, faToggleOff, faToggleOn, faUserMinus } from '@fortawesome/free-solid-svg-icons';
 import { finalize, from, mergeMap } from 'rxjs';
 import { Player } from 'src/app/classes/player';
 import { SongScore } from 'src/app/classes/songScore';
@@ -8,6 +8,8 @@ import { PlayerService } from 'src/app/services/player.service';
 import { ScoreService } from 'src/app/services/score.service';
 import twemoji from 'twemoji';
 import * as lookup from 'country-code-lookup';
+import { PlaylistService } from 'src/app/services/playlist.service';
+import { Playlist } from 'src/app/classes/playlist';
 
 @Component({
   selector: 'app-player-cards',
@@ -27,6 +29,8 @@ export class PlayerCardsComponent implements OnInit, OnDestroy {
     toggleOn: faToggleOn,
     toggleOff: faToggleOff,
     userMinus: faUserMinus,
+    satelliteDish: faSatelliteDish,
+    download: faDownload,
   }
 
   @Input() players: Player[] = [];
@@ -40,6 +44,7 @@ export class PlayerCardsComponent implements OnInit, OnDestroy {
     private scoreService: ScoreService,
     private playerService: PlayerService,
     private sanitizer: DomSanitizer,
+    private playlistService: PlaylistService,
   ) { }
   ngOnDestroy(): void {
   }
@@ -176,6 +181,18 @@ export class PlayerCardsComponent implements OnInit, OnDestroy {
   }
 
 
+  downloadTrackingPlaylist(player: Player, type: 'recent' | 'top') {
+    this.playlistService.downloadTrackingPlaylist(player, type).subscribe(
+      (playlist) => {
+        const blob = new Blob([JSON.stringify(playlist)], { type: 'text/plain' });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `${player.name} ${type} scores.bplist`;
+        link.click();
+      }
+    );
+  }
 
 
   // emoji: "I ❤️ twemoji!"

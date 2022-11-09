@@ -21,6 +21,7 @@ import { DataTablesModule } from 'angular-datatables';
 import { DecimalPipe } from '@angular/common';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { BbscRankingColorsComponent } from './containers/bbsc-ranking-colors/bbsc-ranking-colors.component';
+import { HsvComponent } from './containers/hsv/hsv.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { BbscRankingColorsComponent } from './containers/bbsc-ranking-colors/bbs
     CompareScoresComponent,
     PlayerCardsComponent,
     BbscRankingColorsComponent,
+    HsvComponent,
   ],
   imports: [
     BrowserModule,

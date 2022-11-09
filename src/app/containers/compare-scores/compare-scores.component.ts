@@ -41,6 +41,7 @@ export class CompareScoresComponent implements OnInit, OnDestroy, AfterViewInit 
   playersScores: { [player_id: string]: SongScore[] } = {};
   scoresTable: any[] = [];
   showScoresInCommon = true;
+  showPlayedSongs = true;
   showRanked = true;
 
   minStars: number = null;
@@ -346,7 +347,9 @@ export class CompareScoresComponent implements OnInit, OnDestroy, AfterViewInit 
     let start: number;
     start = performance.now();
 
-    this.scoresTable = []
+    this.scoresTable = [];
+    const songs_played = new Set();
+
     for (let i_song = 0; i_song < this.playersScores[player_id]?.length; i_song++) {
       const song = this.playersScores[player_id][i_song];
       // if (this.showRanked === !song.leaderboard.ranked) continue;
@@ -365,6 +368,7 @@ export class CompareScoresComponent implements OnInit, OnDestroy, AfterViewInit 
         'ranked': song.leaderboard.ranked,
         'stars': song.leaderboard.stars,
         'maxScore': song.leaderboard.maxScore,
+        'song_played_by_sniper': false,
       }
 
       var players_played = 0;
@@ -398,9 +402,28 @@ export class CompareScoresComponent implements OnInit, OnDestroy, AfterViewInit 
       }
 
 
+      if (songScoresByPlayer[this.main_player_id]) {
+        songs_played.add(scoreRow.hash);
+      }
+
+
       Object.assign(scoreRow, songScoresByPlayer);
       this.scoresTable.push(scoreRow);
     }
+
+    // Set songs played by sniper
+    for (let i_song = 0; i_song < this.scoresTable.length; i_song++) {
+      const song = this.scoresTable[i_song];
+      if (songs_played.has(song.hash)) {
+        song.song_played_by_sniper = true;
+      }
+    }
+
+    console.log("songs_played:", songs_played);
+    console.log("songs played by sniper:", this.scoresTable.filter((song: any) => song.song_played_by_sniper));
+    console.log("songs not played by sniper:", this.scoresTable.filter((song: any) => !song.song_played_by_sniper).length);
+
+
 
     this.setSliderOptions(starsFloor, starsCeil);
     console.log("build_scores_array", Math.round(performance.now() - start), "ms");
@@ -415,7 +438,9 @@ export class CompareScoresComponent implements OnInit, OnDestroy, AfterViewInit 
       $.fn['dataTable'].ext.search.push((settings: DataTables.Settings, dataArr: any, dataIndex: number, rowData: any, counter: number) => {
 
         if (this.showRanked !== rowData.ranked) return false;
-        if (this.showScoresInCommon === !rowData[this.main_player_id]) return false;
+        if (!this.showPlayedSongs) {
+          if (rowData.song_played_by_sniper) return false;
+        } else if (this.showScoresInCommon === !rowData[this.main_player_id]) return false;
         if (!this.showSnipedSongsAlso && rowData[this.main_player_id]?.baseScore > rowData[this.target_player_id].baseScore) return false;
         if (this.showRanked) {
           if (this.minStars && this.minStars > rowData.stars) return false;

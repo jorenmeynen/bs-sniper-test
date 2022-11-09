@@ -25,12 +25,19 @@
 
 
 
-    <div class="btn-group me-3 py-1">
-      <button class="btn btn-outline-light me-1" (click)="showScoresInCommon = !showScoresInCommon; filterTable()">
-        <fa-icon [icon]="faIcons.check" class="text-success" [fixedWidth]="true" *ngIf="showScoresInCommon"></fa-icon>
-        <fa-icon [icon]="faIcons.xmark" class="text-danger" [fixedWidth]="true" *ngIf="!showScoresInCommon"></fa-icon>
-        <span class="ps-1">Played</span>
+    <div class="btn-group py-1">
+      <button class="btn btn-outline-light me-1" [disabled]="!showPlayedSongs" (click)="showScoresInCommon = !showScoresInCommon; filterTable()" placement="bottom" [ngbTooltip]="'Include/Exclude difficulties that were already played before'">
+        <fa-icon [icon]="faIcons.check" class="text-success" [fixedWidth]="true" *ngIf="showScoresInCommon && showPlayedSongs"></fa-icon>
+        <fa-icon [icon]="faIcons.xmark" class="text-danger" [fixedWidth]="true" *ngIf="!showScoresInCommon || !showPlayedSongs"></fa-icon>
+        <span class="ps-1">Played Diffs</span>
       </button>
+      <button class="btn btn-outline-light me-1" (click)="showPlayedSongs = !showPlayedSongs; filterTable()" placement="bottom" [ngbTooltip]="'Uncheck to exclude songs where any difficulty was already played'">
+        <fa-icon [icon]="faIcons.check" class="text-success" [fixedWidth]="true" *ngIf="showPlayedSongs"></fa-icon>
+        <fa-icon [icon]="faIcons.xmark" class="text-danger" [fixedWidth]="true" *ngIf="!showPlayedSongs"></fa-icon>
+        <span class="ps-1">Played Songs</span>
+      </button>
+    </div>
+    <div class="btn-group me-3 py-1">
       <button class="btn btn-outline-light me-1" (click)="showRanked = !showRanked; filterTable()">
         <fa-icon [icon]="faIcons.check" class="text-success" [fixedWidth]="true" *ngIf="showRanked"></fa-icon>
         <fa-icon [icon]="faIcons.xmark" class="text-danger" [fixedWidth]="true" *ngIf="!showRanked"></fa-icon>

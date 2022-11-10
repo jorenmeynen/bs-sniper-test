@@ -24,8 +24,15 @@
     </div>
 
 
+    <select class="form-select me-1" style="width: auto" [(ngModel)]="chosenPlayedOption" (change)="filterTable()">
+      <option *ngFor="let option of optionsPlayed" [ngValue]="option.label" style="padding: 8px 10px;">{{option.label}}</option>
+    </select>
 
-    <div class="btn-group py-1">
+    <!-- <ng-select class="me-1" style="width: 133.30px;" [items]="optionsPlayed" bindLabel="label" bindValue="label" [clearable]="false" [searchable]="false" [(ngModel)]="chosenPlayedOption" (change)="filterTable()">
+    </ng-select> -->
+
+
+    <!-- <div class="btn-group py-1">
       <button class="btn btn-outline-light me-1" [disabled]="!showPlayedSongs" (click)="showScoresInCommon = !showScoresInCommon; filterTable()" placement="bottom" [ngbTooltip]="'Include/Exclude difficulties that were already played before'">
         <fa-icon [icon]="faIcons.check" class="text-success" [fixedWidth]="true" *ngIf="showScoresInCommon && showPlayedSongs"></fa-icon>
         <fa-icon [icon]="faIcons.xmark" class="text-danger" [fixedWidth]="true" *ngIf="!showScoresInCommon || !showPlayedSongs"></fa-icon>
@@ -36,7 +43,7 @@
         <fa-icon [icon]="faIcons.xmark" class="text-danger" [fixedWidth]="true" *ngIf="!showPlayedSongs"></fa-icon>
         <span class="ps-1">Played Songs</span>
       </button>
-    </div>
+    </div> -->
     <div class="btn-group me-3 py-1">
       <button class="btn btn-outline-light me-1" (click)="showRanked = !showRanked; filterTable()">
         <fa-icon [icon]="faIcons.check" class="text-success" [fixedWidth]="true" *ngIf="showRanked"></fa-icon>

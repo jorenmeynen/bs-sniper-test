@@ -44,6 +44,17 @@ export class CompareScoresComponent implements OnInit, OnDestroy, AfterViewInit 
   showPlayedSongs = true;
   showRanked = true;
 
+  
+  optionsPlayed = [
+    { value: 0, label: 'Played' },
+    { value: 1, label: 'New Difficulties' },
+    { value: 2, label: 'New Songs' },
+    { value: 3, label: 'Played + New' },
+  ];
+  chosenPlayedOption: 'Played' | 'New Difficulties' | 'New Songs' | 'Played + New' = 'Played';
+
+
+
   minStars: number = null;
   maxStars: number = null;
   sliderOptions: Options = {
@@ -438,9 +449,19 @@ export class CompareScoresComponent implements OnInit, OnDestroy, AfterViewInit 
       $.fn['dataTable'].ext.search.push((settings: DataTables.Settings, dataArr: any, dataIndex: number, rowData: any, counter: number) => {
 
         if (this.showRanked !== rowData.ranked) return false;
-        if (!this.showPlayedSongs) {
+        // if (!this.showPlayedSongs) {
+        //   if (rowData.song_played_by_sniper) return false;
+        // } else if (this.showScoresInCommon === !rowData[this.main_player_id]) return false;
+
+        if (this.chosenPlayedOption === 'Played') {
+          if (!rowData[this.main_player_id]) return false;
+        } else if (this.chosenPlayedOption === 'New Difficulties') {
+          if (rowData[this.main_player_id]) return false;
+        } else if (this.chosenPlayedOption === 'New Songs') {
           if (rowData.song_played_by_sniper) return false;
-        } else if (this.showScoresInCommon === !rowData[this.main_player_id]) return false;
+        }
+
+
         if (!this.showSnipedSongsAlso && rowData[this.main_player_id]?.baseScore > rowData[this.target_player_id].baseScore) return false;
         if (this.showRanked) {
           if (this.minStars && this.minStars > rowData.stars) return false;

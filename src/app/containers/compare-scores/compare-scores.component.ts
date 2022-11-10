@@ -40,7 +40,7 @@ export class CompareScoresComponent implements OnInit, OnDestroy, AfterViewInit 
   players: Player[];
   playersScores: { [player_id: string]: SongScore[] } = {};
   scoresTable: any[] = [];
-  showScoresInCommon = true;
+  // showScoresInCommon = true;
   showPlayedSongs = true;
   showRanked = true;
 
@@ -500,7 +500,24 @@ export class CompareScoresComponent implements OnInit, OnDestroy, AfterViewInit 
 
     let playlist = this.playlistService.makeSnipePlaylist(sniper, snipee, scoresTableRows, snipeCount);
     playlist.playlistTitle += this.showRanked ? " Ranked" : " Unranked";
-    playlist.playlistTitle += this.showScoresInCommon ? " Played" : " New";
+    // playlist.playlistTitle += this.showScoresInCommon ? " Played" : " New";
+
+    switch (this.chosenPlayedOption) {
+      case 'Played':
+        playlist.playlistTitle += " Played";
+        break;
+      case 'New Difficulties':
+        playlist.playlistTitle += " New Difficulties";
+        break;
+      case 'New Songs':
+        playlist.playlistTitle += " New Songs";
+        break;
+      case 'Played + New':
+        playlist.playlistTitle += " Played + New";
+        break;
+    }
+
+
     if (this.sliderOptions.floor !== this.minStars) {
       if (this.sliderOptions.ceil === this.maxStars) {
         playlist.playlistTitle += ` ${this.minStars}+`;

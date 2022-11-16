@@ -92,8 +92,10 @@ async function makePlaylist(req, res, sort='recent') {
     const playlist = buildPlaylist(syncUrl, response_scores_data.data);
 
     playlist.playlistTitle = `Track ${sort} ${player_name}${new_page > 1 ? `, page ${new_page}` : ""}`;
-    playlist.playlistAuthor = "ss-details.heruokuRouter.com";
-    playlist.playlistDescription = `${ss_id} - ${player_name} - ${song_count} Most Recent Songs`;
+    playlist.playlistAuthor = "ss-sniper.heruokuapp.com";
+    playlist.playlistDescription = `${ss_id} - ${player_name} - ${song_count} ${sort} Songs`;
+
+  console.log(`Tracking playlist made or synced on ${ss_id} - ${player_name} - ${song_count} ${sort} Songs`);
 
     res.json(playlist);
   }

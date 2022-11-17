@@ -1,3 +1,5 @@
+import { SafeHtml } from "@angular/platform-browser";
+
  const hsv: HSV = {
   "majorVersion": 3,
   "minorVersion": 2,
@@ -128,17 +130,21 @@ export interface HSV {
   doIntermediateUpdates: boolean;
   timeDependencyDecimalPrecision: number;
   timeDependencyDecimalOffset: number;
-  judgments: Judgment[];
+  judgments: Judgement[];
   beforeCutAngleJudgments: BeforeCutAngleJudgment[];
   accuracyJudgments: AccuracyJudgment[];
   afterCutAngleJudgments: AfterCutAngleJudgment[];
 }
 
-interface Judgment {
+export interface Judgement {
   threshold: number;
   text: string;
   color: number[];
   fade: boolean;
+
+  innerHTML_Example?: SafeHtml;
+  innerHTML_High?: SafeHtml;
+  innerHTML_Low?: SafeHtml;
 }
 
 interface BeforeCutAngleJudgment {

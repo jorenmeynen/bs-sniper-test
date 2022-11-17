@@ -7,3 +7,34 @@ input[type="file"] {
   padding: 6px 12px;
   cursor: pointer;
 }
+
+
+.no-border-bottom td {
+  border-bottom: 0px;
+}
+
+.no-padding-bottom td {
+  padding-bottom: 0px;
+}
+
+.no-padding-top td {
+  padding-top: 0px;
+}
+
+.striped {
+  --bs-table-accent-bg: var(--bs-table-striped-bg);
+  color: var(--bs-table-striped-color);
+}
+
+.highlight {
+  --bs-table-accent-bg: var(--bs-table-hover-bg);
+  color: var(--bs-table-hover-color);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@500&display=swap');
+
+// set font
+.hsv-text {
+  font-family: 'Teko', sans-serif;
+  font-size: 20px;
+}

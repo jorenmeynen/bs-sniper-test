@@ -1,16 +1,69 @@
 <div class="p-3">
 
-  <label class="custom-file-upload">
+  <label class="custom-file-upload mb-2">
     <input type="file" (change)="onFileChangeHSV($event)"/>
     <fa-icon [icon]="faIcons.faUpload" class="me-2"></fa-icon>
     <span>Start from HSV file</span>
   </label>
+
+
+
+  <div class="row">
+    <!-- Before Cut Angle Judgement -->
+    <div class="col-md-4">
+      <table class="table table-striped table-hover">
+        <thead>
+          <th scope="col" style="width: 0px;">Threshold</th>
+          <th scope="col" style="width: 0px;">Judgement</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let judgement of hsv.beforeCutAngleJudgments">
+            <td>{{judgement.threshold}}</td>
+            <td class="text-nowrap">{{judgement.text}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- After Cut Angle Judgement -->
+    <div class="col-md-4">
+      <table class="table table-striped table-hover">
+        <thead>
+          <th scope="col" style="width: 0px;">Threshold</th>
+          <th scope="col" style="width: 0px;">Judgement</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let judgement of hsv.afterCutAngleJudgments">
+            <td>{{judgement.threshold}}</td>
+            <td class="text-nowrap">{{judgement.text}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- Accuracy Judgement -->
+    <div class="col-md-4">
+      <table class="table table-striped table-hover">
+        <thead>
+          <th scope="col" style="width: 0px;">Threshold</th>
+          <th scope="col" style="width: 0px;">Judgement</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let judgement of hsv.accuracyJudgments">
+            <td>{{judgement.threshold}}</td>
+            <td class="text-nowrap">{{judgement.text}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
 
   <!-- Table with HSV judgements and examples -->
   <table class="table table-striped table-hover">
     <thead>
       <tr>
         <th scope="col" style="width: 0px;">Threshold</th>
+        <th scope="col" style="width: 0px;">Color</th>
         <th scope="col" style="width: 0px;">Judgement</th>
         <th scope="col" style="width: 0px;">Example</th>
         <th scope="col" style="width: 0px;">High</th>
@@ -21,6 +74,7 @@
     <tbody>
       <tr *ngFor="let judgement of hsv.judgments">
         <td>{{judgement.threshold}}</td>
+        <td class="text-nowrap">{{judgement.color}}</td>
         <td class="text-nowrap">{{judgement.text}}</td>
         <td class="text-nowrap hsv-text p-0 border-end" [innerHTML]="judgement.innerHTML_Example"></td>
         <td class="text-nowrap hsv-text p-0" [innerHTML]="judgement.innerHTML_High"></td>
@@ -29,6 +83,7 @@
       </tr>
     </tbody>
   </table>
+
 
   <!--
   Token	Explanation / Info

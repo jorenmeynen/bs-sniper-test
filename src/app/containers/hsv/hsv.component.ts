@@ -71,13 +71,22 @@ export class HsvComponent implements OnInit {
 
   setInnerHTML(hsv: HSV) {
     for (let judgement of hsv.judgments) {
+      judgement.threshold = (judgement.threshold) ? judgement.threshold : 0;
+
       const judgement_text = this.setInnerHTMLExampleHSV(judgement);
       // replace %s with the threshold in the judgement
-      const low = judgement_text.replace(/%s/g, judgement.threshold.toString());
+      const low = judgement_text
+        .replace(/%s/g, judgement.threshold.toString())
+        .replace(/%B/g, hsv.beforeCutAngleJudgments[1].text)
+        .replace(/%A/g, hsv.afterCutAngleJudgments[1].text)
+        .replace(/%C/g, hsv.accuracyJudgments[1]?.text);
       // replace %s with the threshold - 1 in the previous judgement, or 115 if it's the first judgement
       const high_score = hsv.judgments.indexOf(judgement) == 0 ? 115 : hsv.judgments[hsv.judgments.indexOf(judgement) - 1].threshold - 1;
 
-      const high = judgement_text.replace(/%s/g, high_score.toString());
+      const high = judgement_text.replace(/%s/g, high_score.toString())
+        .replace(/%B/g, hsv.beforeCutAngleJudgments[0].text)
+        .replace(/%A/g, hsv.afterCutAngleJudgments[0].text)
+        .replace(/%C/g, hsv.accuracyJudgments[0].text);
 
 
 

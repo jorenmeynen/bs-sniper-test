@@ -26,9 +26,9 @@ app.use(cors({ origin: "*" }));
 //   ]
 // }));
 app.get("/favicon.ico", (req, res) => "your favicon");
-// const routes = require("./api/index.js");
-import routes from "./api/index.js";
-app.use("/api", routes);
+// const routes = require("./backend/index.js");
+import routes from "./backend/index.js";
+app.use("/backend", routes);
 
 
 

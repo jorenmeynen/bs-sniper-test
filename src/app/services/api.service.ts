@@ -33,6 +33,10 @@ export class ApiService {
       }
       httpOptions['params'] = httpParams;
     }
+    console.log("window.location:", window.location);
+    console.log("BASE_URL:", this.BASE_URL);
+    console.log("URL:", url);
+    console.log("httpOptions:", httpOptions);
 
     return this.http.get(this.BASE_URL + url, httpOptions);
   }

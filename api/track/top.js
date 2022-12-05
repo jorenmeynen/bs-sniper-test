@@ -1,4 +1,4 @@
-import { makePlaylist } from "../../backend/makePlaylist";
+import { makePlaylist } from "../../backend/makePlaylist.js";
 
 export default async (req, res) => {
     if (req.method === "GET") {

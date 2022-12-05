@@ -1,3 +1,4 @@
+import { handleError } from "../backend/errorHandler.js";
 import { searchPlayers } from "../backend/searchPlayers.js";
 
 export default async (req, res) => {

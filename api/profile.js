@@ -1,5 +1,5 @@
-import { handleError } from "../backend/errorHandler";
-import { getPlayerProfile } from "../backend/getPlayerScores";
+import { handleError } from "../backend/errorHandler.js";
+import { getPlayerProfile } from "../backend/getPlayerScores.js";
 
 
 export default async (req, res) => {

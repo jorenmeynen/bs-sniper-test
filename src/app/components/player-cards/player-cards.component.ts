@@ -133,7 +133,7 @@ export class PlayerCardsComponent implements OnInit, OnDestroy {
     this.playerService.getProfile(player.id).subscribe({
       next: (profile: any) => {
         this.playerService.addPlayer(profile);
-        this.getPlayerScores(player);
+        this.getPlayerScores(profile);
       },
       error: (err) => {
         this.loadingPlayerScores[player.id] = false;

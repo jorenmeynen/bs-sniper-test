@@ -10,14 +10,24 @@ export async function makePlaylist(req, res, sort = 'recent') {
     const now = new Date().getTime();
     const new_page = (now - last_request < 30 * 1000) ? +page_number + 1 : 1;
 
-    const base_url = `${req.protocol}://${req.get("host")}/api${req.route.path}`;
-    let syncUrl = `${base_url}`;
-    syncUrl += `/?ss_id=${ss_id}`;
-    syncUrl += `&song_count=${song_count}`;
-    syncUrl += (page_number > 0) ? `&page_number=${new_page}` : "&page_number=1";
-    syncUrl += `&last_request=${now}`;
+    console.log("req:", req)
+    console.log("req.url:", req.url)
+    console.log("req.headers:", req.headers)
+    console.log("req.headers.host:", req.headers.host)
+    console.log("req.headers.x-forwarded-host:", req.headers["x-forwarded-host"])
+    console.log("req.headers.referer:", req.headers.referer)
 
-    console.log(syncUrl);
+    // const base_url = `${req.protocol}://${req.get("host")}/api${req.route.path}`;
+
+    const base_url = `${req.headers["x-forwarded-proto"]}://${req.headers["x-forwarded-host"]}${req.url}`;
+    console.log("base_url:", base_url)
+    let syncUrl = `${base_url}`;
+    // syncUrl += `/?ss_id=${ss_id}`;
+    // syncUrl += `&song_count=${song_count}`;
+    // syncUrl += (page_number > 0) ? `&page_number=${new_page}` : "&page_number=1";
+    // syncUrl += `&last_request=${now}`;
+
+    console.log("syncUrl: ", syncUrl);
 
     try {
         const res_player_data = await getPlayerProfile(ss_id);

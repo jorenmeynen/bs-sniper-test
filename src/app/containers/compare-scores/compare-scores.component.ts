@@ -244,13 +244,16 @@ export class CompareScoresComponent implements OnInit, OnDestroy, AfterViewInit 
       {
         title: "Song", data: "songName", className: "py-1", render: (data: any, type: any, row: any) => `
         ${data}
-        <span class="sub-text">${row.songSubName}</span><br>
+        <span class="sub-text">${row.songSubName}</span>
+        <br>
         <a href='https://beatsaver.com/?q=${row.hash}' target='_blank' title="Open in BeatSaver" class="text-decoration-none">
           <img src="assets/images/beatsaver_icon_mono.png" style="height: 20px">
         </a>
         <a href='https://scoresaber.com/leaderboard/${row.id}' target='_blank' title="Open in ScoreSaber" class="text-decoration-none">
           <img src="assets/images/scoresaber_icon_mono.png" style="height: 25px">
         </a>
+        <span class="sub-text text-nowrap" style="color:lightblue">${row.songAuthorName}</span>
+        <span class="sub-text text-nowrap">[<span style="color:#6eb66e">${row.levelAuthorName}</span>]</span>
         `
       },
       ...playerColumns
@@ -258,6 +261,8 @@ export class CompareScoresComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   setDtOptions() {
+    let song = this.scoresTable.find((score) => score.songName?.includes('umor'));
+    console.log(song)
     this.dtOptions = {
       data: this.scoresTable,
       pageLength: 10,
@@ -374,6 +379,8 @@ export class CompareScoresComponent implements OnInit, OnDestroy, AfterViewInit 
         'coverImage': song.leaderboard.coverImage,
         'songName': song.leaderboard.songName,
         'songSubName': song.leaderboard.songSubName,
+        'songAuthorName': song.leaderboard.songAuthorName,
+        'levelAuthorName': song.leaderboard.levelAuthorName,
         'difficulty': song.leaderboard.difficulty.difficulty,
         'gameMode': song.leaderboard.difficulty.gameMode,
         'ranked': song.leaderboard.ranked,
